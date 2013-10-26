@@ -1,83 +1,127 @@
 <html>
 <head>
+
 <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="waterbird.form.validator.js"></script>
-<script src="waterbird.form.config.js"></script>
+<script src="js/waterbird.form.validator.js"></script>
+<script src="js/waterbird.form.config.js"></script>
+<script src="js/waterbird.form.fieldtip.js"></script>
+
+<style type="text/css">
+
+body {
+	font-family: sans-serif;
+	color: #FFF;
+}
+
+.data {
+	width: 342px;
+	margin: 10px auto;
+	padding: 0;
+	background: #222;
+	box-shadow: 0px 0px 10px #444;
+	border-radius: 10px;
+}
+
+h2 {
+	padding: 5px 10px;
+	background: #78C605;
+	margin: 0;
+	border-radius: 9px 9px 0px 0px;
+}
+
+form {
+	padding: 10px 20px;
+}
+
+label {
+	padding: 5px;
+	font-size: 13px;
+	font-weight: bold;
+}
+
+input[type=text] {
+	outline: none;
+	border: none;
+	background: #444;
+	padding: 10px 5px;
+	width: 300px;
+	display: block;
+	color: #FFF;
+	font-size: 13px;
+}
+
+input[type=text]:focus {
+	border: thin solid #78C605;
+	padding: 9px 4px;
+}
+
+p {
+	padding: 0px 5px;
+	font-size: 12px;
+	font-style:italic;
+    padding-left: 20px;
+}
+
+p.valid {
+	background: url(images/valid.png) no-repeat 0 50%;
+}
+
+p.invalid {
+	background: url(images/invalid.png) no-repeat 0 50%;
+}
+
+input[type=submit] {
+	background: #78C605;
+	border: none;
+	padding: 5px 10px;
+	display: block;
+	color: #FFF;
+	font-size: 14px;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
+</style>
+
 </head>
 
 <body>
 
-<h2>WaterBird</h2>
-
-<form>
-
 <div class="data">
-first name: 
-<input type="text" name="fname" id="fname" class="fname required ">
-<p class="fname-warning">&nbsp;</p>
+	
+	<h2>WaterBird Form Validator</h2>
+	
+	<form class="waterbird-form">
+	
+		<label for="text" >Text:</label> 
+		<input type="text" name="text" id="text" title="single word">
+		<p id="text-msg">&nbsp;</p>
+	
+		<label for="number">Number:</label>
+		<input type="text" name="number" id="number" title="positive interger">
+		<p id="number-msg">&nbsp;</p>
+	
+		<label for="email">Email:</label>
+		<input type="text" name="email" id="email" title="e.g waterbird@email.com">
+		<p id="email-msg">&nbsp;</p>
+	
+		<label for="url">URL:</label>
+		<input type="text" name="url" id="url" title="www.waterbird.com">
+		<p id="url-msg">&nbsp;</p>
+	
+		<label for="phone">Phone:</label>
+		<input type="text" name="phone" id="phone" title="+XXX-XXXXXXXXX">
+		<p id="phone-msg">&nbsp;</p>
+	
+		<label for="date">Date:</label>
+		<input type="text" name="date" id="date" title="DD-MM-YYYY">
+		<p id="date-msg">&nbsp;</p>
+	
+		<input type="submit"  id="button" class="button" value="submit">
+	
+	</form>
+	
 </div>
-
-<div class="data">
-last name: 
-<input type="text" name="lname" id="lname" class="lname required ">
-<p class="lname-warning">&nbsp;</p>
-</div>
-
-
-<div class="data">
-age:
-<input type="text" name="age" id="age" class="age required ">
-<p class="age-warning">&nbsp;</p>
-</div>
-
-<div class="data">
-email:
-<input type="text" name="email" id="email" class="email required ">
-<p class="email-warning">&nbsp;</p>
-</div>
-
-
-<div class="data">
-website:
-<input type="text" name="website" id="website" class="website required ">
-<p class="website-warning">&nbsp;</p>
-</div>
-
-<div class="data">
-phone:
-<input type="text" name="phone" id="lname" class="phone required ">
-<p class="phone-warning">&nbsp;</p>
-</div>
-
-
-<div class="data">
-password:
-<input type="password" name="password" id="password" class="password required ">
-<p class="password-warning">&nbsp;</p>
-</div>
-
-<div class="data">
-confirm password
-<input type="password" name="password-2" id="password-2" class="password-2 required ">
-<p class="password-2-warning">&nbsp;</p>
-</div>
-
-<div class="data">
-<input type="button"  id="button" class="button" value="submit">
-</div>
-
-
-
-
-
-
-
-
-</form>
-
-
-
-
 
 </body>
 </html>
