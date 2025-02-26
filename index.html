@@ -1,127 +1,72 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-
-<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
-<script src="js/waterbird.form.validator.js"></script>
-<script src="js/waterbird.form.config.js"></script>
-<script src="js/waterbird.form.fieldtip.js"></script>
-
-<style type="text/css">
-
-body {
-	font-family: sans-serif;
-	color: #FFF;
-}
-
-.data {
-	width: 342px;
-	margin: 10px auto;
-	padding: 0;
-	background: #222;
-	box-shadow: 0px 0px 10px #444;
-	border-radius: 10px;
-}
-
-h2 {
-	padding: 5px 10px;
-	background: #78C605;
-	margin: 0;
-	border-radius: 9px 9px 0px 0px;
-}
-
-form {
-	padding: 10px 20px;
-}
-
-label {
-	padding: 5px;
-	font-size: 13px;
-	font-weight: bold;
-}
-
-input[type=text] {
-	outline: none;
-	border: none;
-	background: #444;
-	padding: 10px 5px;
-	width: 300px;
-	display: block;
-	color: #FFF;
-	font-size: 13px;
-}
-
-input[type=text]:focus {
-	border: thin solid #78C605;
-	padding: 9px 4px;
-}
-
-p {
-	padding: 0px 5px;
-	font-size: 12px;
-	font-style:italic;
-    padding-left: 20px;
-}
-
-p.valid {
-	background: url(images/valid.png) no-repeat 0 50%;
-}
-
-p.invalid {
-	background: url(images/invalid.png) no-repeat 0 50%;
-}
-
-input[type=submit] {
-	background: #78C605;
-	border: none;
-	padding: 5px 10px;
-	display: block;
-	color: #FFF;
-	font-size: 14px;
-	border-radius: 5px;
-	font-weight: bold;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration Form</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="src/waterbird-jquery-form-validation-plugin.css" rel="stylesheet">
+    <!-- WaterBird jQuery Form Validator Plugin -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="src/waterbird-jquery-form-validation-plugin.js"></script>
+    <style>
+        .global-error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
 </head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+            <h2 class="text-2xl font-bold text-center mb-6">User Registration</h2>
+            <form id="registrationForm">
+                <!-- Global Error Message -->
+                <div class="global-error-message"></div>
 
-<body>
+                <!-- Name Field -->
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" id="name" name="name" data-validation="alpha-numeric-space" required>
+                </div>
 
-<div class="data">
-	
-	<h2>WaterBird Form Validator</h2>
-	
-	<form class="waterbird-form">
-	
-		<label for="text" >Text:</label> 
-		<input type="text" name="text" id="text" title="single word">
-		<p id="text-msg">&nbsp;</p>
-	
-		<label for="number">Number:</label>
-		<input type="text" name="number" id="number" title="positive interger">
-		<p id="number-msg">&nbsp;</p>
-	
-		<label for="email">Email:</label>
-		<input type="text" name="email" id="email" title="e.g waterbird@email.com">
-		<p id="email-msg">&nbsp;</p>
-	
-		<label for="url">URL:</label>
-		<input type="text" name="url" id="url" title="www.waterbird.com">
-		<p id="url-msg">&nbsp;</p>
-	
-		<label for="phone">Phone:</label>
-		<input type="text" name="phone" id="phone" title="+XXX-XXXXXXXXX">
-		<p id="phone-msg">&nbsp;</p>
-	
-		<label for="date">Date:</label>
-		<input type="text" name="date" id="date" title="DD-MM-YYYY">
-		<p id="date-msg">&nbsp;</p>
-	
-		<input type="submit"  id="button" class="button" value="submit">
-	
-	</form>
-	
-</div>
+                <!-- Email Field -->
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" id="email" name="email" data-validation="email" required data-error="Please provide a valid email address.">
+                </div>
 
+                <!-- Phone Field -->
+                <div class="mb-4">
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" id="phone" name="phone" data-validation="phone" required>
+                </div>
+
+                <!-- Date of Birth Field -->
+                <div class="mb-6">
+                    <label for="dob" class="block text-sm font-medium text-gray-700">Date of Birth</label>
+                    <input type="text" class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm" id="dob" name="dob" data-validation="date" required data-error="Please enter a valid date (YYYY-MM-DD).">
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="w-full bg-blue-500 text-white py-2 px-4 rounded-md hover:bg-blue-600">Register</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize the WaterBird jQuery Form Validator
+            $('#registrationForm').validateForm({
+                showErrorMessages: true, // Enable error messages
+                validateOnLoad: false, // Validate pre-filled fields on form load
+                globalErrorContainer: '.global-error-message', // Global error message container
+                globalErrorMessage: 'Please fill out all required fields correctly.' // Custom global error message
+            });
+        });
+    </script>
 </body>
 </html>

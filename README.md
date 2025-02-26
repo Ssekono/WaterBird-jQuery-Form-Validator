@@ -1,63 +1,229 @@
-Waterbird v1.0
+# WaterBird jQuery Form Validator
 
-Created by Joe Ssekono
-http://josephssekono.novariss.com
+**WaterBird jQuery Form Validator** is a lightweight and flexible jQuery plugin designed to simplify form validation. It allows you to validate form input fields based on the `data-validation` attribute, adding `validation-pass` or `validation-fail` classes to the input fields. It supports real-time validation on `blur` and displays custom error messages below the input fields.
 
-This plugin is licensed under the [MIT License](LICENSE.txt).
+---
 
-Waterbird is a JQuery plugin that validates HTML forms. The plugin simplifies
-the process on validating a form by simply setting up the plugin's config file.
-Validation is done as soon as one moves from the respective form and and feedback
-to whether the content is valid is given back. This enables the form user to
-quickly fix it. The plugin also provides field-tip feature that can contain
-information that aid a form user on what content or format input should be made.
+## Features
 
-Please give feedback of what can be improved and what new features can be added.
+- **Custom Validation Rules**: Define validation rules using the `data-validation` attribute.
+- **Real-Time Validation**: Validate fields on `blur` (when the input loses focus).
+- **Custom Error Messages**: Use the `data-error` attribute to display custom error messages.
+- **Pre-Filled Field Validation**: Optionally validate pre-filled fields on form load.
+- **Flexible Configuration**: Customize error classes, success classes, and more.
+- **Lightweight**: Built with jQuery for easy integration.
 
-Enjoy using this plugin
+---
 
+## Installation
 
-Requirements
-============
-1. JQuery library (1.8.0 and above)
+1. Include jQuery in your project:
+   ```html
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+   ```
 
+2. Include the WaterBird jQuery Form Validator plugin:
+   ```html
+   <script src="path/to/waterbird-validator.js"></script>
+   ```
 
-Waterbird Files
-===============
-1. waterbird.form.validator.js
-   This file contains all the functions that run the form validation process.
-   
-2. waterbird.form.validator.min.js
-   This is a minified version of waterbird.form.validator.js 
-   
-3. waterbird.form.config.js
-   This file contains the settings to which form elements are to be validated
-   and options to how they should be validated.
+---
 
-4. waterbird.form.fieldtip.js
-   This file enables the insertion of input field-tips.
+## Usage
 
+### Basic Setup
 
-How to use Waterbird Plugin
-===========================
-1. Give your form elements unique id names that will be used by the plugin to
-   validate form entries
-2. Plugin output information will be sent to the html element that has an id 
-   name with a suffix '-msg' of the respective form element
-3. Set the type of validation that you desire to be carried out on a desired 
-   form element in waterbird.form.config.js file
-4. If an form entry is required, ensure that you set 'required' to 'yes' in the
-   waterbird.form.config.js file
-5. Adding waterbird.form.fieldtip.js file will add a field-tip in an empty 
-   input form input field. The field-tip is picked from the title attribute of
-   the form element.
-   
-Config File settings
-====================
-1. type
-   Sets the type of validation to be done
-        Accepted Values: text, number, date, phone, url, email
+1. Add the `data-validation` attribute to your input fields:
+   ```html
+   <form id="myForm">
+       <label for="email">Email:</label>
+       <input type="text" id="email" name="email" data-validation="email" data-error="Please provide a valid email address.">
+       <br>
 
-2. requried
-   Sets the validator to only validate the field if it is not empty
-        Accepted Values: yes, no
+       <label for="phone">Phone (UG):</label>
+       <input type="text" id="phone" name="phone" data-validation="phone-ug">
+       <br>
+
+       <label for="password">Password:</label>
+       <input type="password" id="password" name="password" data-validation="strong-password">
+       <br>
+
+       <input type="submit" value="Submit">
+   </form>
+   ```
+
+2. Initialize the plugin:
+   ```javascript
+   $(document).ready(function() {
+       $('#myForm').validateForm({
+           showErrorMessages: true, // Enable error messages
+           validateOnLoad: true // Validate pre-filled fields on form load
+       });
+   });
+   ```
+
+---
+
+### Validation Types
+
+The plugin supports the following validation types:
+
+| Validation Type       | Description                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|
+| `phone`               | Valid phone number format.                                                  |
+| `phone-ug`            | Valid Uganda phone number format.                                           |
+| `email`               | Valid email format.                                                         |
+| `date`                | Valid date format (YYYY-MM-DD).                                             |
+| `alpha-numeric`       | Alphanumeric string (letters and numbers).                                  |
+| `alpha-numeric-space` | Alphanumeric string with spaces.                                            |
+| `alpha-numeric-punct` | Alphanumeric string with spaces and special characters: `~!@#$%&*-_+=|:.`. |
+| `alpha`               | Alphabetic string (letters only).                                           |
+| `number`              | Valid number (including decimals).                                          |
+| `natural-number`      | Valid natural number (positive integers).                                   |
+| `url`                 | Valid URL format.                                                           |
+| `credit-card`         | Valid credit card number format.                                            |
+| `ipv4`                | Valid IPv4 address format.                                                  |
+| `ipv6`                | Valid IPv6 address format.                                                  |
+| `year`                | Valid year.                                                                 |
+| `month`               | Valid month (1-12).                                                         |
+| `day`                 | Valid day (1-31).                                                           |
+| `strong-password`     | Strong password (8+ characters, including uppercase, lowercase, numbers, and special characters). |
+
+---
+
+### Custom Error Messages
+
+You can provide custom error messages using the `data-error` attribute:
+```html
+<input type="text" id="email" name="email" data-validation="email" data-error="Please provide a valid email address.">
+```
+
+If no `data-error` attribute is provided, the plugin will use default error messages.
+
+---
+
+### Plugin Options
+
+The plugin supports the following options:
+
+| Option               | Default Value               | Description                                                                 |
+|----------------------|-----------------------------|-----------------------------------------------------------------------------|
+| `submitButton`       | `'input[type="submit"]'`    | Selector for the submit button.                                             |
+| `errorClass`         | `'validation-fail'`         | CSS class added to invalid inputs.                                          |
+| `successClass`       | `'validation-pass'`         | CSS class added to valid inputs.                                            |
+| `errorMessageClass`  | `'validation-error-message'`| CSS class for error messages.                                               |
+| `showErrorMessages`  | `true`                      | Whether to display error messages.                                          |
+| `validateOnLoad`     | `false`                     | Whether to validate pre-filled fields on form load.                         |
+
+Example with custom options:
+```javascript
+$('#myForm').validateForm({
+    submitButton: '.submit-btn', // Custom submit button selector
+    errorClass: 'input-error', // Custom error class
+    successClass: 'input-success', // Custom success class
+    errorMessageClass: 'custom-error-message', // Custom error message class
+    showErrorMessages: true, // Enable error messages
+    validateOnLoad: true // Validate pre-filled fields on form load
+});
+```
+
+---
+
+### Styling
+
+You can customize the appearance of validation states and error messages using CSS:
+
+```css
+.validation-fail {
+    border: 2px solid red;
+}
+
+.validation-pass {
+    border: 2px solid green;
+}
+
+.validation-error-message {
+    color: red;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 5px;
+}
+
+input[type="submit"]:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+```
+
+---
+
+## Example
+
+Here’s a complete example:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WaterBird jQuery Form Validator</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="path/to/waterbird-validator.js"></script>
+    <style>
+        .validation-fail { border: 2px solid red; }
+        .validation-pass { border: 2px solid green; }
+        .validation-error-message { color: red; font-size: 0.9em; display: block; margin-top: 5px; }
+        input[type="submit"]:disabled { background-color: #ccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <form id="myForm">
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" data-validation="email" data-error="Please provide a valid email address.">
+        <br>
+
+        <label for="phone">Phone (UG):</label>
+        <input type="text" id="phone" name="phone" data-validation="phone-ug">
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" data-validation="strong-password">
+        <br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#myForm').validateForm({
+                showErrorMessages: true,
+                validateOnLoad: true
+            });
+        });
+    </script>
+</body>
+</html>
+```
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Contributing
+
+Contributions are welcome! Please open an issue or submit a pull request.
+
+---
+
+## Support
+
+If you have any questions or need help, feel free to open an issue on GitHub.
+
+---
+
+Enjoy using **WaterBird jQuery Form Validator**! 🚀
