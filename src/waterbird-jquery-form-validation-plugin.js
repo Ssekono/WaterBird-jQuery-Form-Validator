@@ -61,15 +61,15 @@
             globalErrorMessage: 'Please fill out all required fields correctly.' // Global error message
         }, options);
 
-        // Function to validate a single input field
-        function validateInput(input) {
-            const validationType = input.attr('data-validation');
-            const value = input.val().trim();
-            const isRequired = input.is('[required]');
+        // Function to validate a single form element
+        function validateElement(element) {
+            const validationType = element.attr('data-validation');
+            const value = element.val().trim();
+            const isRequired = element.is('[required]');
 
             // Skip validation if the field is not required and empty
             if (!isRequired && value === '') {
-                input.removeClass(settings.errorClass).addClass(settings.successClass);
+                element.removeClass(settings.errorClass).addClass(settings.successClass);
                 return true;
             }
 
@@ -79,18 +79,18 @@
 
             // Add/remove validation classes
             if (isValid) {
-                input.removeClass(settings.errorClass).addClass(settings.successClass);
+                element.removeClass(settings.errorClass).addClass(settings.successClass);
             } else {
-                input.removeClass(settings.successClass).addClass(settings.errorClass);
+                element.removeClass(settings.successClass).addClass(settings.errorClass);
             }
 
             // Display error message if enabled
             if (settings.showErrorMessages) {
-                let errorMessage = input.next(`.${settings.errorMessageClass}`);
+                let errorMessage = element.next(`.${settings.errorMessageClass}`);
                 if (!errorMessage.length) {
-                    errorMessage = $(`<span class="${settings.errorMessageClass}"></span>`).insertAfter(input);
+                    errorMessage = $(`<span class="${settings.errorMessageClass}"></span>`).insertAfter(element);
                 }
-                const customErrorMessage = input.attr('data-error');
+                const customErrorMessage = element.attr('data-error');
                 errorMessage.text(isValid ? '' : (customErrorMessage || defaultErrorMessages[validationType] || 'Invalid input.'));
             }
 
@@ -101,8 +101,8 @@
         function checkFormValidity(form) {
             let isFormValid = true;
 
-            form.find('input[data-validation]').each(function() {
-                if (!validateInput($(this))) {
+            form.find('[data-validation]').each(function() {
+                if (!validateElement($(this))) {
                     isFormValid = false;
                 }
             });
@@ -124,14 +124,14 @@
             const form = $(this);
 
             // Validate on blur (when the input loses focus)
-            form.find('input[data-validation]').on('blur', function() {
-                validateInput($(this)); // Validate only the blurred field
+            form.find('[data-validation]').on('blur', function() {
+                validateElement($(this)); // Validate only the blurred field
             });
 
             // Validate on form load (if enabled)
             if (settings.validateOnLoad) {
-                form.find('input[data-validation]').each(function() {
-                    validateInput($(this)); // Validate each field individually
+                form.find('[data-validation]').each(function() {
+                    validateElement($(this)); // Validate each field individually
                 });
                 checkFormValidity(form); // Check overall form validity
             }
